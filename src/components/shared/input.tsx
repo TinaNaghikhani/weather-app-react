@@ -1,6 +1,6 @@
 interface IProps {
     name?: string,
-    onChange?: () => void,
+    onChange?: React.ChangeEvent<HTMLInputElement>,
     placeholder?: string,
     label?: string,
     className: string,

@@ -1,5 +1,4 @@
 import axios from "axios"
-import { clipPath } from "framer-motion/client";
 
 const APIKEY = " e547d101022438d9c784ff7d24b103b8"
 

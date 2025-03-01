@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Card = () => {
+const Card = ({ weatherData }) => {
+  // const weatherCondition = data.weather[0].main || "Unknown";
     return (
         <StyledWrapper>
             <div className="card">
                 <div className="container">
-                    <div className="cloud front">
+            <span>{weatherData.weather[0].icon}</span>
+                    {/* <div className="cloud front">
                         <span className="left-front" />
                         <span className="right-front" />
                     </div>
@@ -15,13 +17,13 @@ const Card = () => {
                     <div className="cloud back">
                         <span className="left-back" />
                         <span className="right-back" />
-                    </div>
+                    </div> */}
                 </div>
                 <div className="card-header">
-                    <span>Messadine, Susah<br />Tunisia</span>
-                    <span>March 13</span>
+            <span>{weatherData.name}</span>
+            <span>{weatherData.weather[0].main}</span>
                 </div>
-                <span className="temp">23°</span>
+          <span className="temp">{weatherData.main.temp}</span>
                 <div className="temp-scale">
                     <span>Celcius</span>
                 </div>
