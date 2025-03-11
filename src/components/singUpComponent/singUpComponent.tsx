@@ -37,7 +37,7 @@ export default function SingUpComponent() {
                 <div>
                     <Input label="Enter your E-mail:" placeholder="email@gmail.com" type="email" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
                     <Input label="Enter your Password:" placeholder="123456789" type="password" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
-                    <p className="mt-4 mb-10 text-sky-700">have'nt you SinUp before? so <span onClick={loginHandler} className="cursor-pointer text-blue-800 hover:text-blue-300">SinUp!</span></p>
+                    <p className="mt-4 mb-10 text-sky-700">have you SinUp before? so <span onClick={loginHandler} className="cursor-pointer text-blue-800 hover:text-blue-300">Login!</span></p>
                     <SINGUPBUTTON onClick={singupHandler} />
                 </div>
                 <div className="flex gap-10 z-10 m-2 items-baseline">

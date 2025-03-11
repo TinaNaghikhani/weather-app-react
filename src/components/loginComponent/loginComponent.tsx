@@ -3,14 +3,28 @@ import SunLoader from "../shared/sun";
 import LOGINBUTTON from "../shared/loginButton";
 import starryNight from "../../assets/starry night2.jpg"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../shared/loader";
 import Raining from "../shared/elements/rainig";
 import Sunny from "../shared/elements/sunny";
 import Cloudy from "../shared/elements/cloudy";
 
+const RegexPassword = /^[1-9]{8,}$/
 export default function LoginComponent() {
   const [loader, setLoader] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (RegexPassword.test(value)) {
+      setIsValid(true);
+      setIsDisabled(false);
+    } else {
+      setIsValid(false);
+      setIsDisabled(true);
+    }
+  }, [value]);
 
   const navigator = useNavigate();
   const logInHandler = (): void => {
@@ -41,8 +55,10 @@ export default function LoginComponent() {
       </div>
       <div className="flex flex-col justify-center items-center w-1/2 p-24 ml-4 mt-3 text-center bg-sky-100 h-screen rounded-full border border-sky-500 border-8 border-dashed">
         <div>
-          <Input label="Enter your E-mail:" placeholder="email@gmail.com" type="email" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
-          <Input label="Enter your Password:" placeholder="123456789" type="password" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
+          <Input value={value} label="Enter your E-mail:" placeholder="email@gmail.com" type="email" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
+          <Input value={value} label="Enter your Password:" placeholder="123456789" type="password" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
+          {isValid && <p className="text-xs text-green-500">That's right!</p>}
+          {!isValid && <p className="text-xs text-red-500">Please Choose 5 to 10</p>}
           <p className="mt-4 mb-10 text-sky-700">have'nt you SinUp before? so <span onClick={singUpHandler} className="cursor-pointer text-blue-800 hover:text-blue-300">SinUp!</span></p>
           <LOGINBUTTON onClick={logInHandler} />
         </div>

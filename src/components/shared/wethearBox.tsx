@@ -1,35 +1,32 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Card = ({ weatherData }) => {
-  // const weatherCondition = data.weather[0].main || "Unknown";
-    return (
-        <StyledWrapper>
-            <div className="card">
-                <div className="container">
-            <span>{weatherData.weather[0].icon}</span>
-                    {/* <div className="cloud front">
-                        <span className="left-front" />
-                        <span className="right-front" />
-                    </div>
-                    <span className="sun sunshine" />
-                    <span className="sun" />
-                    <div className="cloud back">
-                        <span className="left-back" />
-                        <span className="right-back" />
-                    </div> */}
-                </div>
-                <div className="card-header">
-            <span>{weatherData.name}</span>
-            <span>{weatherData.weather[0].main}</span>
-                </div>
+  const iconCode = weatherData?.weather?.[0]?.icon || "01d"; // مقدار پیش‌فرض برای جلوگیری از خطا
+  const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`; // @2x برای کیفیت بالاتر
+  // const icon = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`  || "Unknown";
+  return (
+    <StyledWrapper>
+      <div className="card">
+        <div className="container">
+          <img className='w-40' src={iconUrl} alt="icon" />
+        </div>
+        <div className="card-header">
+          <span>{weatherData.name}</span>
+          <span>{weatherData.weather[0].main}</span>
+        </div>
+        <div className='mt-4 flex flex-col gap-2'>
           <span className="temp">{weatherData.main.temp}</span>
-                <div className="temp-scale">
-                    <span>Celcius</span>
-                </div>
-            </div>
-        </StyledWrapper>
-    );
+          <span className='maxTemp'>Max Temp:{weatherData.main.temp_max}</span>
+          <span className='minTemp'>Min Temp:{weatherData.main.temp_min}</span>
+        </div>
+
+
+        <div className="temp-scale">
+          <span>Celcius</span>
+        </div>
+      </div>
+    </StyledWrapper>
+  );
 }
 
 const StyledWrapper = styled.div`
@@ -38,7 +35,7 @@ const StyledWrapper = styled.div`
     height: 235px;
     position: relative;
     padding: 25px;
-    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #FFF7B1 0%, rgba(255, 255, 255, 0) 71.88%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, #FFFFFF;
+    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%,rgb(98,101,99) 0%, rgba(255, 255, 255, 0) 71.88%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,rgb(138, 156, 144);
     box-shadow: 0px 155px 62px rgba(0, 0, 0, 0.01), 0px 87px 52px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.09), 0px 10px 21px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
     border-radius: 23px;
     transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
@@ -53,8 +50,8 @@ const StyledWrapper = styled.div`
     width: 250px;
     height: 250px;
     position: absolute;
-    right: -35px;
-    top: -50px;
+    right: -55px;
+    top: -70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,18 +167,30 @@ const StyledWrapper = styled.div`
   .card-header span:first-child {
     word-break: break-all;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 24px;
     line-height: 135%;
-    color: rgba(87, 77, 51, 0.66);
+    color: rgba(248, 247, 246, 0.66);
   }
 
   .card-header span:last-child {
     font-weight: 700;
+    font-size: 18px;
+    line-height: 135%;
+    color: rgba(221, 219, 219, 0.62);
+  }
+.maxTemp{
+    word-break: break-all;
+    font-weight: 800;
     font-size: 15px;
     line-height: 135%;
-    color: rgba(87, 77, 51, 0.33);
-  }
-
+    color: rgba(235, 223, 194, 0.66);
+}
+    .minTemp{
+        font-weight: 700;
+    font-size: 15px;
+    line-height: 135%;
+    color: rgba(235, 223, 194, 0.66);
+    }
   .temp {
     position: absolute;
     left: 25px;
@@ -189,7 +198,7 @@ const StyledWrapper = styled.div`
     font-weight: 700;
     font-size: 64px;
     line-height: 77px;
-    color: rgba(87, 77, 51, 1);
+    color: rgb(248, 219, 147);
   }
 
   .temp-scale {
@@ -201,7 +210,7 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.06);
+    background: rgb(248, 219, 147);
     border-radius: 9px;
   }
 
