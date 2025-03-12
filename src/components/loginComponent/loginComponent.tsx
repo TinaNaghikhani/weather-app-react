@@ -5,6 +5,7 @@ import starryNight from "../../assets/starry night2.jpg"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loader from "../shared/loader";
+import axios from "axios";
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const RegexPassword = /^\d{8,}$/;
@@ -18,11 +19,11 @@ export default function LoginComponent() {
 
   const navigator = useNavigate();
 
-  const logInHandler = (e) => {
+  const logInHandler =async (e) => {
     e.preventDefault();
     setIsSubmitted(true)
     if (!emailRegex.test(email)) {
-      setEmailError("wroung email address")
+      setEmailError("wrong email address")
     } else {
       setEmailError("")
     }
@@ -33,11 +34,32 @@ export default function LoginComponent() {
     }
 
     if (emailRegex.test(email) && RegexPassword.test(password)) {
-      setLoader(true);
-      setTimeout(() => {
-        setLoader(false);
-        navigator("/weatherApp");
-      }, 5000);
+      try {
+        setLoader(true);
+        const response = await axios.get(
+          `https://676ac00c863eaa5ac0df824c.mockapi.io/tinatodolist/contacts?email=${email}`
+        );
+
+        const userEmail = response.data[0];
+        if (userEmail.email ===email) {
+          navigator("/weatherApp");
+        } else {
+          navigator("/signUp");
+        }
+        const user = response.data[0];
+        if (user.password === password) {
+          navigator("/weatherApp"); 
+        } else {
+          setPasswordError("رمز عبور اشتباه است");
+        }
+
+      } catch (error) {
+        console.error("خطا در ارتباط:", error);
+        if (status === 404) {
+          navigator("/signUp");
+          setLoader(false);
+        }
+      } 
     }
   };
   const singUpHandler = (): void => {
@@ -54,7 +76,8 @@ export default function LoginComponent() {
           <Loader />
         </div>
       )}
-      <div className="w-1/2 h-screen bg-amber-100 rounded-full pt-20 ml-10 -mt-32 -mr-52 flex justify-center items-center border border-amber-500 border-8 border-dashed">
+      <div data-aos="fade-right" className="w-full p-0 flex">
+              <div className="w-1/2 h-screen bg-amber-100 rounded-full pt-20 ml-10 -mt-32 -mr-52 flex justify-center items-center border border-amber-500 border-8 border-dashed">
         <SunLoader />
       </div>
       <div className="flex flex-col justify-center items-center w-1/2 p-24 ml-4 mt-3 text-center bg-sky-100 h-screen rounded-full border border-sky-500 border-8 border-dashed">
@@ -69,6 +92,8 @@ export default function LoginComponent() {
           <LOGINBUTTON type="submit" />
         </form>
       </div>
+      </div>
+
 
     </div>
   )

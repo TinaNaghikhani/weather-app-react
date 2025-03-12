@@ -21,7 +21,7 @@ export default function SingUpComponent() {
         e.preventDefault();
         setIsSubmitted(true)
         if (!emailRegex.test(email)) {
-            setEmailError("wroung email address")
+            setEmailError("wrong email address")
         } else {
             setEmailError("")
         }
@@ -70,21 +70,24 @@ export default function SingUpComponent() {
                     <Loader />
                 </div>
             )}
-            <div className="z-0 flex flex-col justify-center items-center w-1/2 p-24 ml-4 mt-3 text-center bg-sky-100 h-screen rounded-full border border-sky-500 border-8 border-dashed">
-                <form onSubmit={singupHandler}>
-                    <Input value={email} onChange={(e) => setEmail(e.target.value)} label="Enter your E-mail:" placeholder="email@gmail.com" type="email" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
-                    {isSubmitted && emailError && <p className="text-xs text-red-500">{emailError}</p>}
+            <div data-aos="fade-left" className="w-full p-0 flex">
+                <div className="z-0 flex flex-col justify-center items-center w-1/2 p-24 ml-4 mt-3 text-center bg-sky-100 h-screen rounded-full border border-sky-500 border-8 border-dashed">
+                    <form onSubmit={singupHandler}>
+                        <Input value={email} onChange={(e) => setEmail(e.target.value)} label="Enter your E-mail:" placeholder="email@gmail.com" type="email" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
+                        {isSubmitted && emailError && <p className="text-xs text-red-500">{emailError}</p>}
 
-                    <Input value={password} onChange={(e) => setPassword(e.target.value)} label="Enter your Password:" placeholder="123456789" type="password" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
-                    {isSubmitted && passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
+                        <Input value={password} onChange={(e) => setPassword(e.target.value)} label="Enter your Password:" placeholder="123456789" type="password" className="w-64 px-4 py-2 border border-sky-700 text-md text-sky-400 bg-sky-200 rounded-full shadow-lg focus:outline-none" />
+                        {isSubmitted && passwordError && <p className="text-xs text-red-500">{passwordError}</p>}
 
-                    <p className="mt-4 mb-10 text-sky-700">have you SinUp before? so <span onClick={loginHandler} className="cursor-pointer text-blue-800 hover:text-blue-300">Login!</span></p>
-                    <SINGUPBUTTON type="submit" />
-                </form>
+                        <p className="mt-4 mb-10 text-sky-700">have you SinUp before? so <span onClick={loginHandler} className="cursor-pointer text-blue-800 hover:text-blue-300">Login!</span></p>
+                        <SINGUPBUTTON type="submit" />
+                    </form>
+                </div>
+                <div className="w-1/2 h-screen bg-amber-100 rounded-full pt-20 -mt-32 -ml-52 flex justify-center items-center border border-amber-500 border-8 border-dashed">
+                    <SunLoader />
+                </div>
             </div>
-            <div className="w-1/2 h-screen bg-amber-100 rounded-full pt-20 -mt-32 -ml-52 flex justify-center items-center border border-amber-500 border-8 border-dashed">
-                <SunLoader />
-            </div>
+
         </div>
     )
 }
