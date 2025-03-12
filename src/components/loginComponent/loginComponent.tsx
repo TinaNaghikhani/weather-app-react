@@ -3,7 +3,7 @@ import SunLoader from "../shared/sun";
 import LOGINBUTTON from "../shared/loginButton";
 import starryNight from "../../assets/starry night2.jpg"
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "../shared/loader";
 import axios from "axios";
 
@@ -19,7 +19,7 @@ export default function LoginComponent() {
 
   const navigator = useNavigate();
 
-  const logInHandler =async (e) => {
+  const logInHandler =async (e:any) => {
     e.preventDefault();
     setIsSubmitted(true)
     if (!emailRegex.test(email)) {
@@ -40,23 +40,32 @@ export default function LoginComponent() {
           `https://676ac00c863eaa5ac0df824c.mockapi.io/tinatodolist/contacts?email=${email}`
         );
 
-        const userEmail = response.data[0];
-        if (userEmail.email ===email) {
-          navigator("/weatherApp");
-        } else {
-          navigator("/signUp");
-        }
-        const user = response.data[0];
-        if (user.password === password) {
-          navigator("/weatherApp"); 
-        } else {
-          setPasswordError("رمز عبور اشتباه است");
+        // جستجو در تمام داده‌های API برای پیدا کردن ایمیل و رمز عبور
+        const user = response.data.find((user) => user.email === email);
+
+        if (user) {
+          // اگر ایمیل پیدا شد، رمز عبور را بررسی می‌کنیم
+          if (user.password === password) {
+            // اگر رمز عبور صحیح بود، به صفحه weatherApp هدایت می‌کنیم
+            navigator("/weatherApp");
+          } else {
+            // اگر رمز عبور اشتباه بود
+            setPasswordError("رمز عبور اشتباه است");
+          }
         }
 
       } catch (error) {
         console.error("خطا در ارتباط:", error);
-        if (status === 404) {
-          navigator("/signUp");
+        if (axios.isAxiosError(error) && error.response) {
+          // بررسی اگر status 404 باشد
+          if (error.response.status === 404) {
+            navigator("/signUp");
+          } else {
+            // اگر خطای دیگری باشد
+            setLoader(false);
+          }
+        } else {
+          // در صورت هر نوع خطای دیگر (مثل مشکلات شبکه یا سرور)
           setLoader(false);
         }
       } 

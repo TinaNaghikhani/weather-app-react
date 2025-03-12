@@ -6,18 +6,22 @@ import Card from "../shared/wethearBox";
 import axios from "axios";
 
 //for delay on calling api
-const useDebounce = (value, delay) => {
-  const [debounceValue, setDebounceValue] = useState(value);
+const useDebounce = <T,>(value: T, delay: number): T => {
+  const [debounceValue, setDebounceValue] = useState<T>(value);
+
   useEffect(() => {
-    const setTimeOut = setTimeout(() => {
+    const timeout = setTimeout(() => {
       setDebounceValue(value);
     }, delay);
+
     return () => {
-      clearTimeout(setTimeOut);
+      clearTimeout(timeout);
     };
   }, [value, delay]);
+
   return debounceValue;
 };
+
 
 export default function Main() {
   const [city, setCity] = useState("");
@@ -37,7 +41,7 @@ export default function Main() {
       );
       setWeatherData(response.data);
       console.log(response)
-      const savedData = JSON.parse(localStorage.getItem("searchedCities")) || [];
+      const savedData: any[] = JSON.parse(localStorage.getItem("searchedCities") || "[]");
       if (savedData.length >= 7) {
         savedData.shift(); // حذف اولین آیتم (قدیمی‌ترین)
       }
@@ -62,7 +66,7 @@ export default function Main() {
 
   useEffect(() => {
     // Load saved data from localStorage on component mount
-    const data = JSON.parse(localStorage.getItem("searchedCities")) || [];
+    const data: any[] = JSON.parse(localStorage.getItem("searchedCities") || "[]");
     setSavedWeatherData(data);
   }, []);
 

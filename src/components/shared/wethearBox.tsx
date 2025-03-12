@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-const Card = ({ weatherData }) => {
-  const iconCode = weatherData?.weather?.[0]?.icon || "01d"; // مقدار پیش‌فرض برای جلوگیری از خطا
-  const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`; // @2x برای کیفیت بالاتر
-  // const icon = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`  || "Unknown";
+const Card = ({ weatherData }:any) => {
+  const iconCode = weatherData.weather[0].icon; // مقدار پیش‌فرض برای جلوگیری از خطا
+  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`; // @2x برای کیفیت بالاتر
+  console.log(iconCode)
+  console.log(iconUrl)
   return (
     <StyledWrapper>
       <div className="card">
